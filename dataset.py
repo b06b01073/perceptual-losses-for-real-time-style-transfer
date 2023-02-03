@@ -1,5 +1,7 @@
 import os
+
 from torch.utils.data import Dataset
+import torch
 
 import utils
 
@@ -20,5 +22,9 @@ class COCODataset(Dataset):
     def __getitem__(self, index):
         # Note that the file name in COCO dataset is renamed to 1.jpg, 2.jpg, etc 
         file_path = os.path.join(self.img_dir, f'{index}.jpg')
+        img = utils.read_img(file_path)
 
-        return utils.read_img(file_path)
+        if img.shape[0] == 1:
+            img = img.repeat((3, 1, 1))
+
+        return img
