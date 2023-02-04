@@ -57,7 +57,7 @@ if __name__ == '__main__':
     parser.add_argument('--epochs', '-e', type=int, default=20)
     parser.add_argument('--lr', type=float, default=1e-3)
     parser.add_argument('--batch_size', '-b', type=int, default=4)
-    parser.add_argument('--style_img', '-s', type=str, default='./style_images/mosaic.jpg')
+    parser.add_argument('--style_img', '-s', type=str, default='./style_images/night.jpg')
     parser.add_argument('--data_path', '-d', type=str, default='./train2014')
 
     args = parser.parse_args()
