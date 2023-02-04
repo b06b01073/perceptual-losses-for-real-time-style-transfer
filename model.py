@@ -25,20 +25,11 @@ class TransformNet(nn.Module):
             nn.BatchNorm2d(128),
             nn.ReLU(),
 
-            self.res_blocks[0],
-            nn.ReLU(),
-
-            self.res_blocks[1],
-            nn.ReLU(),
-
-            self.res_blocks[2],
-            nn.ReLU(),
-
-            self.res_blocks[3],
-            nn.ReLU(),
-
-            self.res_blocks[4],
-            nn.ReLU(),
+            ResBlock(in_channels=128, out_channels=128, kernel_size=3),
+            ResBlock(in_channels=128, out_channels=128, kernel_size=3),
+            ResBlock(in_channels=128, out_channels=128, kernel_size=3),
+            ResBlock(in_channels=128, out_channels=128, kernel_size=3),
+            ResBlock(in_channels=128, out_channels=128, kernel_size=3),
             
             UpsampleLayer(in_channels=128, out_channels=64, kernel_size=3, padding=1),
             nn.BatchNorm2d(64),

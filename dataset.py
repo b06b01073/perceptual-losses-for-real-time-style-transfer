@@ -24,7 +24,4 @@ class COCODataset(Dataset):
         file_path = os.path.join(self.img_dir, f'{index}.jpg')
         img = utils.read_img(file_path)
 
-        if img.shape[0] == 1:
-            img = img.repeat((3, 1, 1))
-
         return img
