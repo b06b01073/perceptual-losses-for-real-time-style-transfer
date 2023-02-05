@@ -45,20 +45,21 @@ def train(args):
             style_loss /= args.batch_size
 
             optimizer.zero_grad()
-            total_loss = content_loss + 6e6 * style_loss
+            total_loss = content_loss + args.style_weight * style_loss
             total_loss.backward()
             optimizer.step()
 
-            # print(f'epoch: {epoch}, batch: {index} / {dataset.len // args.batch_size}, loss: {total_loss.item()}')
+        torch.save(transform_net.state_dict(), f'model_params/epoch{epoch}.pth')
 
 
 if __name__ == '__main__':
     parser = argparse.ArgumentParser()
-    parser.add_argument('--epochs', '-e', type=int, default=20)
+    parser.add_argument('--epochs', '-e', type=int, default=6)
     parser.add_argument('--lr', type=float, default=1e-3)
     parser.add_argument('--batch_size', '-b', type=int, default=4)
     parser.add_argument('--style_img', '-s', type=str, default='./style_images/night.jpg')
     parser.add_argument('--data_path', '-d', type=str, default='./train2014')
+    parser.add_argument('--style_weight', type=float, default=6e6)
 
     args = parser.parse_args()
 

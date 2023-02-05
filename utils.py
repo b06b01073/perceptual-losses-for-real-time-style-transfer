@@ -39,3 +39,8 @@ def batch_norm(x):
     (b, c, h, w) = x.size()
     x /= c * h * w
     return x
+
+def load_model(model, model_path):
+    dir_path = os.path.dirname(__file__) 
+    model_path = os.path.join(dir_path, model_path)
+    model.load_state_dict(torch.load(model_path))
