@@ -54,11 +54,13 @@ def train(args):
 
 if __name__ == '__main__':
     parser = argparse.ArgumentParser()
-    parser.add_argument('--epochs', '-e', type=int, default=6)
+    parser.add_argument('--epochs', '-e', type=int, default=20)
     parser.add_argument('--lr', type=float, default=1e-3)
     parser.add_argument('--batch_size', '-b', type=int, default=4)
     parser.add_argument('--style_img', '-s', type=str, default='./style_images/night.jpg')
     parser.add_argument('--data_path', '-d', type=str, default='./train2014')
+
+    # this is probably the only parameter that need to be tuned for different style image
     parser.add_argument('--style_weight', type=float, default=6e6)
 
     args = parser.parse_args()

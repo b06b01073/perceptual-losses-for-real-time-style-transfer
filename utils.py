@@ -2,28 +2,30 @@ import os
 from PIL import Image
 
 from torchvision import transforms
+import torchvision
+from torchvision.utils import save_image
+from tqdm import tqdm
+
 import torch
 import numpy as np
 
-IMAGENET_MEAN_1 = np.array([0.485, 0.456, 0.406])
-IMAGENET_STD_1 = np.array([0.229, 0.224, 0.225])
 
-def read_img(img_path, normalize=False):
+def get_path(path):
     dir_path = os.path.dirname(__file__) 
-    img_path = os.path.join(dir_path, img_path)
+    path = os.path.join(dir_path, path)
+    return path
 
+def read_img(img_path):
+    img_path = get_path(img_path)
     img = Image.open(img_path).convert('RGB')
 
     preprocess = [
         transforms.Resize((256, 256)),
         transforms.ToTensor(),
     ]
-
-    if normalize:
-        preprocess.append(transforms.Normalize(mean=IMAGENET_MEAN_1, std=IMAGENET_STD_1))
-
     img = transforms.Compose(preprocess)(img)
-    return img 
+    return img
+
 
 def gram_matrix(x, should_normalize=True):
     (b, c, h, w) = x.size()
@@ -41,6 +43,20 @@ def batch_norm(x):
     return x
 
 def load_model(model, model_path):
-    dir_path = os.path.dirname(__file__) 
-    model_path = os.path.join(dir_path, model_path)
+    model_path = get_path(model_path)
     model.load_state_dict(torch.load(model_path))
+
+
+def read_video(video_path):
+    video_path = get_path(video_path)
+    video = torchvision.io.read_video(video_path)
+    return video[0], video[2]['video_fps']
+
+
+def save_gif(output, gif_path, fps):
+    gif_path = get_path(gif_path)
+    frames = [transforms.ToPILImage()(frame) for frame in tqdm(output, desc='frames')]
+    first_frame = frames[0]
+
+    duration = len(frames) / fps
+    first_frame.save(gif_path, format="GIF", append_images=frames, save_all=True, duration=duration,  loop=0)

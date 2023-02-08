@@ -6,6 +6,7 @@ from torchvision.utils import save_image
 
 import utils
 from model import TransformNet_V2
+import dataset
 
 device = 'cuda' if torch.cuda.is_available() else 'cpu'
 
@@ -16,8 +17,9 @@ def main(args):
 
     img = utils.read_img(args.input).to(device)
 
-    output = transform_net(img)
-    save_image(output, args.output)
+    with torch.no_grad():
+        output = transform_net(img)
+        save_image(output, args.output)
 
 
     
@@ -25,8 +27,7 @@ def main(args):
 if __name__ ==  '__main__':
     parser = argparse.ArgumentParser() 
     parser.add_argument('--input', type=str, default='./input/input.jpg')
-    parser.add_argument('--output', type=str, default='./output/result.jpg')
-
+    parser.add_argument('--output', type=str, default='./output/images/result.jpg')
     parser.add_argument('--model_path', type=str, default='./model_params/night/epoch3.pth')
     args = parser.parse_args()
 
