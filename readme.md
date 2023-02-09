@@ -2,7 +2,7 @@
 
 ## Introduction
 
-This is a simplified implementation of the paper "Perceptual Losses for Real-Time Style Transfer and Super-Resolution"[1], which mainly focus on the style transfer part. 
+This is a simplified implementation of the paper "Perceptual Losses for Real-Time Style Transfer and Super-Resolution"[1], and mainly focus on the style transfer part. 
 
 There are three main differences between my implementation and the one in the paper:
 
@@ -15,7 +15,7 @@ The training dataset are from [COCO dataset](https://cocodataset.org/#download) 
 ## How to Run This Project
 ``` 
 $ python train.py   # to train the model
-$ python stylization # to get the stylized image from the pretrained model
+$ python stylization.py # to get the stylized image from the pretrained model
 ```
 
 ## Results
@@ -44,7 +44,7 @@ Results without cherry picking, the style_weight is set to 3e6 during traning:
 <p align="center">
   <img src="./readme_result/mosaic/result.jpg">
 </p>
-### 
+
 
 ## References
 
